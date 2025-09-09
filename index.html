@@ -94,23 +94,34 @@
   </footer>
 
   <script>
-    const username = "YOUR_GITHUB_USERNAME"; // Replace with your GitHub username
-    const repoList = document.getElementById("repo-list");
+  const username = "YOUR_GITHUB_USERNAME"; // Replace with your GitHub username
+  const repoList = document.getElementById("repo-list");
 
-    fetch(`https://api.github.com/users/${username}/repos?sort=updated`)
-      .then(response => response.json())
-      .then(repos => {
-        repoList.innerHTML = "";
-        repos.forEach(repo => {
-          const repoItem = document.createElement("p");
-          repoItem.innerHTML = `<a href="${repo.html_url}" target="_blank">${repo.name}</a> - ${repo.description || "No description"}`;
-          repoList.appendChild(repoItem);
-        });
-      })
-      .catch(error => {
-        repoList.innerHTML = "Error loading repositories.";
-        console.error(error);
+  fetch(`https://api.github.com/users/${username}/repos?sort=updated`)
+    .then(response => response.json())
+    .then(repos => {
+      repoList.innerHTML = "";
+      repos.forEach(repo => {
+        const card = document.createElement("div");
+        card.classList.add("repo-card");
+
+        card.innerHTML = `
+          <h3><a href="${repo.html_url}" target="_blank">${repo.name}</a></h3>
+          <p>${repo.description || "No description provided."}</p>
+          <div class="repo-meta">
+            <span>⭐ ${repo.stargazers_count}</span>
+            <span>${repo.language || "N/A"}</span>
+          </div>
+        `;
+
+        repoList.appendChild(card);
       });
-  </script>
+    })
+    .catch(error => {
+      repoList.innerHTML = "Error loading repositories.";
+      console.error(error);
+    });
+</script>
+
 </body>
 </html>
