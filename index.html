@@ -17,6 +17,7 @@
     </p>
     <a href="Resume%20of%20Luis%20Curiel_.pdf" download class="btn">📄 Download My Resume (PDF)</a>
     <a href="details.html" class="btn">📑 View Detailed Skills</a>
+    <button id="theme-toggle" class="btn" type="button">🌙 Dark Mode</button>
   </header>
 
   <section id="summary">
@@ -85,43 +86,75 @@
     <div id="repo-list">Loading repositories...</div>
   </section>
 
+  <section id="contact">
+    <h2>Contact Me</h2>
+    <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="_replyto" required>
+
+      <label for="message">Message</label>
+      <textarea id="message" name="message" rows="5" required></textarea>
+
+      <button type="submit" class="btn">Send Message</button>
+    </form>
+  </section>
+
   <footer>
     <p>
       Contact: <a href="mailto:lmcr-94@hotmail.com">lmcr-94@hotmail.com</a> | 
       <a href="https://linkedin.com/in/">LinkedIn</a> | 
-      <a href="https://github.com/YOUR_GITHUB_USERNAME">GitHub</a>
+      <a href="https://github.com/luis999-eng">GitHub</a>
     </p>
   </footer>
 
   <script>
-  const username = "YOUR_GITHUB_USERNAME"; // Replace with your GitHub username
-  const repoList = document.getElementById("repo-list");
+    // GitHub Repo Fetch
+    const username = "luis999-eng";
+    const repoList = document.getElementById("repo-list");
 
-  fetch(`https://api.github.com/users/${username}/repos?sort=updated`)
-    .then(response => response.json())
-    .then(repos => {
-      repoList.innerHTML = "";
-      repos.forEach(repo => {
-        const card = document.createElement("div");
-        card.classList.add("repo-card");
+    fetch(`https://api.github.com/users/${username}/repos?sort=updated`)
+      .then(response => response.json())
+      .then(repos => {
+        repoList.innerHTML = "";
+        repos.forEach(repo => {
+          const card = document.createElement("div");
+          card.classList.add("repo-card");
 
-        card.innerHTML = `
-          <h3><a href="${repo.html_url}" target="_blank">${repo.name}</a></h3>
-          <p>${repo.description || "No description provided."}</p>
-          <div class="repo-meta">
-            <span>⭐ ${repo.stargazers_count}</span>
-            <span>${repo.language || "N/A"}</span>
-          </div>
-        `;
+          card.innerHTML = `
+            <h3><a href="${repo.html_url}" target="_blank">${repo.name}</a></h3>
+            <p>${repo.description || "No description provided."}</p>
+            <div class="repo-meta">
+              <span>⭐ ${repo.stargazers_count}</span>
+              <span>${repo.language || "N/A"}</span>
+            </div>
+          `;
 
-        repoList.appendChild(card);
+          repoList.appendChild(card);
+        });
+      })
+      .catch(error => {
+        repoList.innerHTML = "Error loading repositories.";
+        console.error(error);
       });
-    })
-    .catch(error => {
-      repoList.innerHTML = "Error loading repositories.";
-      console.error(error);
-    });
-</script>
 
+    // Theme Toggle
+    const toggleBtn = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    if (localStorage.getItem('theme') === 'dark') {
+      body.classList.add('dark-mode');
+      toggleBtn.textContent = '☀️ Light Mode';
+    }
+
+    toggleBtn.addEventListener('click', () => {
+      body.classList.toggle('dark-mode');
+      const isDark = body.classList.contains('dark-mode');
+      toggleBtn.textContent = isDark ? '☀️ Light Mode' : '🌙 Dark Mode';
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    });
+  </script>
 </body>
 </html>
