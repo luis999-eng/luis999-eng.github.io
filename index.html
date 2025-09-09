@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Luis Manuel Curiel Rojas | Resume & Portfolio</title>
   <style>
-    /* Reset some default browser styles */
+    /* Reset */
     * {
       margin: 0;
       padding: 0;
@@ -35,6 +35,22 @@
     header p {
       margin: 5px 0;
       color: #555;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background: #007acc;
+      color: #fff;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 10px;
+      transition: background 0.3s ease;
+    }
+
+    .btn:hover {
+      background: #005f99;
     }
 
     section {
@@ -73,7 +89,6 @@
       text-decoration: underline;
     }
 
-    /* Responsive tweaks */
     @media (max-width: 600px) {
       header h1 {
         font-size: 2rem;
@@ -90,6 +105,7 @@
       <a href="tel:+17055000893">(705) 500‑0893</a> · 
       Windsor, ON, Canada
     </p>
+    <a href="Resume%20of%20Luis%20Curiel_.pdf" download class="btn">📄 Download My Resume (PDF)</a>
   </header>
 
   <section id="summary">
@@ -167,7 +183,7 @@
   </footer>
 
   <script>
-    const username = "YOUR_GITHUB_USERNAME"; // Replace with your GitHub username
+    const username = "luis999-eng"; // Replace with your GitHub username
     const repoList = document.getElementById("repo-list");
 
     fetch(`https://api.github.com/users/${username}/repos?sort=updated`)
